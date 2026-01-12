@@ -24,11 +24,11 @@ class PyObjectId(str):
 
 class MallConfig(BaseModel):
     id: Optional[PyObjectId] = Field(alias="_id", default=None)
-    client_id: str = Field(..., description="Unique client identifier")
+    client_id: str = Field(..., description="쇼핑몰 고유 식별자 (UUID)")
     shop_name: str
-    api_key: str = Field(..., description="Hashed API Key")
-    allowed_domains: List[str] = Field(default_factory=list, description="CORS allowed origins")
-    scraping_rules: dict = Field(default_factory=dict, description="JSON selectors for scraping")
+    api_key: str = Field(..., description="보안을 위해 해싱된 API 키")
+    allowed_domains: List[str] = Field(default_factory=list, description="CORS 허용 도메인 목록 (Origin 검사용)")
+    scraping_rules: dict = Field(default_factory=dict, description="크롤링용 CSS 선택자 (Title, Price 등)")
     plan_tier: str = Field(default="free", pattern="^(free|basic|pro)$")
     monthly_limit: int = 1000
     is_active: bool = True
