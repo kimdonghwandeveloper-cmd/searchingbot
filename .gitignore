@@ -1,3 +1,8 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+*.pyc
+
 # Virtual environments (Python)
 .venv
 core-api/.venv
