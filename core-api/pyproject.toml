@@ -1,0 +1,26 @@
+[project]
+name = "secure-mall-chatbot"
+version = "0.1.0"
+description = "B2B Multi-Tenant RAG Chatbot with Hybrid Scraping"
+requires-python = ">=3.10"
+dependencies = [
+    "fastapi>=0.109.0",
+    "uvicorn[standard]>=0.27.0",
+    "motor>=3.3.0",
+    "pydantic>=2.6.0",
+    "pydantic-settings>=2.1.0",
+    "httpx>=0.26.0",
+    "beautifulsoup4>=4.12.0",
+    "playwright>=1.41.0",
+    "openai>=1.10.0",
+    "tiktoken>=0.5.0",
+    "python-dotenv>=1.0.0",
+    "websockets>=12.0"
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/app"]

@@ -1,10 +1,27 @@
-# Python-generated files
-__pycache__/
-*.py[oc]
-build/
-dist/
-wheels/
-*.egg-info
-
-# Virtual environments
+# Virtual environments (Python)
 .venv
+core-api/.venv
+env/
+venv/
+ENV/
+
+# Rust Build Artifacts
+target/
+scraper-engine/target/
+
+# Environment Variables & Secrets
+.env
+core-api/.env
+.env.*
+!.env.example
+
+# Editor directories and files
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
