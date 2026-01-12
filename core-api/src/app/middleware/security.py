@@ -2,39 +2,21 @@ from fastapi import Depends, HTTPException, Security, Request
 from fastapi.security.api_key import APIKeyHeader
 from starlette.status import HTTP_403_FORBIDDEN, HTTP_401_UNAUTHORIZED
 from app.db.mongodb import get_db
-from app.models.mall import MallConfig
-from motor.motor_asyncio import AsyncIOMotorClient
-import logging
+from app.core.config import settings
 
-# [Junior Dev Note]
-# API Key는 헤더의 "X-API-KEY" 필드 값을 참조합니다.
-# auto_error=False로 설정하여 미들웨어에서 직접 에러를 처리할 수 있게 합니다.
-api_key_header = APIKeyHeader(name="X-API-KEY", auto_error=False)
+# ... (omitted)
 
 async def get_current_mall(
     request: Request,
     api_key: str = Security(api_key_header),
     db: AsyncIOMotorClient = Depends(get_db)
 ) -> MallConfig:
-    """
-    API 요청의 보안을 담당하는 핵심 함수입니다.
-    1. API Key 존재 여부 확인
-    2. DB에서 MallConfig 조회 및 유효성 검사
-    3. Origin (도메인) 검사 (CORS 우회 방지)
-    """
-    
-    # 1. API Key 검사
-    if not api_key:
-        raise HTTPException(
-            status_code=HTTP_401_UNAUTHORIZED,
-            detail="Missing X-API-KEY header"
-        )
+    # ...
     
     # 2. DB 조회
     # [Junior Dev Note]
-    # 실제 프로덕션에서는 API Key를 해싱해서 비교해야 하지만, 초기 개발 단계에서는 평문 비교를 합니다.
-    # 추후 bcrypt 등으로 업그레이드할 예정입니다.
-    row = await db.mall_configs.find_one({"api_key": api_key})
+    # db는 Client 객체이므로, 데이터베이스명(settings.DB_NAME)을 먼저 선택해야 합니다.
+    row = await db[settings.DB_NAME].mall_configs.find_one({"api_key": api_key})
     
     if not row:
         raise HTTPException(
